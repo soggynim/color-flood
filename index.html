@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0d1b4b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Color Flood 🌊</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- SPLASH -->
+  <div id="screen-splash" class="screen active">
+    <div class="bubbles">
+      <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+      <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    </div>
+    <div class="splash-inner">
+      <div class="logo-wrap">
+        <span class="logo-icon">🌊</span>
+        <h1 class="game-title">
+          <span class="t1">C</span><span class="t2">o</span><span class="t3">l</span><span class="t4">o</span><span class="t5">r</span><br>
+          <span class="t2">F</span><span class="t3">l</span><span class="t1">o</span><span class="t4">o</span><span class="t5">d</span>
+        </h1>
+      </div>
+      <div class="subtitle-badge">🎮 Flood the board to win!</div>
+      <div id="profile-list" class="profile-list"></div>
+      <button id="btn-new-profile" class="btn btn-primary">✨ New Player</button>
+    </div>
+  </div>
+
+  <!-- NEW PROFILE -->
+  <div id="screen-new-profile" class="screen">
+    <div class="bubbles">
+      <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    </div>
+    <div class="screen-center">
+      <div class="profile-form-card">
+        <h2>👋 What's your name?</h2>
+        <input id="profile-name-input" type="text" maxlength="16" placeholder="Type your name..." class="name-input" autocomplete="off" />
+        <div class="avatar-picker" id="avatar-picker">
+          <span class="avatar-opt" data-avatar="🦁">🦁</span>
+          <span class="avatar-opt" data-avatar="🐯">🐯</span>
+          <span class="avatar-opt" data-avatar="🐸">🐸</span>
+          <span class="avatar-opt" data-avatar="🐼">🐼</span>
+          <span class="avatar-opt" data-avatar="🦊">🦊</span>
+          <span class="avatar-opt" data-avatar="🐧">🐧</span>
+          <span class="avatar-opt" data-avatar="🦄">🦄</span>
+          <span class="avatar-opt" data-avatar="🐉">🐉</span>
+        </div>
+        <div class="btn-row">
+          <button id="btn-cancel-profile" class="btn btn-ghost">← Back</button>
+          <button id="btn-save-profile" class="btn btn-primary">Let's Play!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL SELECT -->
+  <div id="screen-levels" class="screen">
+    <div class="bubbles">
+      <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+    </div>
+    <header class="game-header">
+      <button id="btn-back-to-splash" class="btn-icon">←</button>
+      <div class="level-info-center">
+        <div id="active-profile-display" class="profile-badge"></div>
+      </div>
+      <div class="spacer"></div>
+    </header>
+    <div class="levels-scroll">
+      <div class="tier-label">🌱 Beginner</div>
+      <div id="level-grid-1" class="level-grid"></div>
+      <div class="tier-label">🔥 Getting Harder</div>
+      <div id="level-grid-2" class="level-grid"></div>
+      <div class="tier-label">⚡ Challenge</div>
+      <div id="level-grid-3" class="level-grid"></div>
+      <div class="tier-label">🏆 Expert</div>
+      <div id="level-grid-4" class="level-grid"></div>
+      <div class="tier-label">💎 Master</div>
+      <div id="level-grid-5" class="level-grid"></div>
+      <div class="tier-label">👑 Legend</div>
+      <div id="level-grid-6" class="level-grid"></div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="screen-game" class="screen">
+    <header class="game-header">
+      <button id="btn-back-to-levels" class="btn-icon">←</button>
+      <div class="level-info-center">
+        <span id="level-label">Level 1</span>
+        <span id="moves-label" class="moves-display">0 / 10</span>
+        <div class="moves-bar-wrap">
+          <div id="moves-bar" class="moves-bar-fill" style="width:100%"></div>
+        </div>
+      </div>
+      <button id="btn-restart" class="btn-icon" title="Restart">↺</button>
+    </header>
+    <div class="game-area">
+      <canvas id="game-canvas"></canvas>
+    </div>
+    <div id="color-buttons" class="color-buttons"></div>
+  </div>
+
+  <!-- WIN OVERLAY -->
+  <div id="overlay-win" class="overlay hidden">
+    <div class="overlay-card win-card">
+      <div class="stars-burst">⭐✨⭐</div>
+      <div class="overlay-emoji">🎉</div>
+      <h2>You did it!</h2>
+      <p id="win-detail">10 moves used</p>
+      <div class="btn-row">
+        <button id="btn-next-level" class="btn btn-primary">Next Level →</button>
+      </div>
+      <button id="btn-win-levels" class="btn btn-ghost" style="width:100%;margin-top:4px">All Levels</button>
+    </div>
+  </div>
+
+  <!-- FAIL OVERLAY -->
+  <div id="overlay-fail" class="overlay hidden">
+    <div class="overlay-card fail-card">
+      <div class="overlay-emoji">😅</div>
+      <h2>Out of moves!</h2>
+      <p>Keep trying — you've got this!</p>
+      <div class="btn-row">
+        <button id="btn-retry" class="btn btn-primary">Try Again!</button>
+        <button id="btn-fail-levels" class="btn btn-ghost">Levels</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js" onerror="void(0)"></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js');</script>
+  <script src="js/levels.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/profiles.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
