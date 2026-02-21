@@ -1,5 +1,5 @@
 // service-worker.js — bump CACHE_VERSION to force refresh on all clients
-const CACHE_VERSION = 'flood-v4';
+const CACHE_VERSION = 'flood-v5';
 
 const STATIC_ASSETS = [
   './',

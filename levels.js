@@ -1,53 +1,80 @@
 // levels.js — all game levels as data
-// Each level: { id, gridSize, colors (count), maxMoves, grid (optional — null = random seed) }
-// grid is a 2D array of color indices (0-5)
-// If grid is null, it's procedurally generated from seed
+// Each level: { id, gridSize, colors (count), maxMoves, seed }
+// Difficulty increases every 5 levels (10 tiers total, 50 levels)
 
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#c77dff', '#ff9f43'];
 const COLOR_NAMES = ['Red', 'Yellow', 'Green', 'Blue', 'Purple', 'Orange'];
 
 const LEVELS = [
-  // ── TIER 1: Age 5+ ── tiny grid, few colors, generous moves
-  { id: 1,  gridSize: 4, colors: 3, maxMoves: 6,  seed: 101 },
-  { id: 2,  gridSize: 4, colors: 3, maxMoves: 7,  seed: 102 },
-  { id: 3,  gridSize: 4, colors: 3, maxMoves: 6,  seed: 103 },
-  { id: 4,  gridSize: 4, colors: 4, maxMoves: 8,  seed: 104 },
-  { id: 5,  gridSize: 4, colors: 4, maxMoves: 7,  seed: 105 },
+  // ── TIER 1: Beginner (4×4, 3 colors, generous moves) ──
+  { id: 1,  gridSize: 4, colors: 3, maxMoves: 8,  seed: 1001 },
+  { id: 2,  gridSize: 4, colors: 3, maxMoves: 8,  seed: 1002 },
+  { id: 3,  gridSize: 4, colors: 3, maxMoves: 7,  seed: 1003 },
+  { id: 4,  gridSize: 4, colors: 3, maxMoves: 7,  seed: 1004 },
+  { id: 5,  gridSize: 4, colors: 3, maxMoves: 6,  seed: 1005 },
 
-  // ── TIER 2: Age 6+ ── 5x5 grid
-  { id: 6,  gridSize: 5, colors: 3, maxMoves: 8,  seed: 201 },
-  { id: 7,  gridSize: 5, colors: 4, maxMoves: 10, seed: 202 },
-  { id: 8,  gridSize: 5, colors: 4, maxMoves: 9,  seed: 203 },
-  { id: 9,  gridSize: 5, colors: 4, maxMoves: 9,  seed: 204 },
-  { id: 10, gridSize: 5, colors: 5, maxMoves: 11, seed: 205 },
+  // ── TIER 2: Easy (4×4, 4 colors) ──
+  { id: 6,  gridSize: 4, colors: 4, maxMoves: 9,  seed: 2001 },
+  { id: 7,  gridSize: 4, colors: 4, maxMoves: 8,  seed: 2002 },
+  { id: 8,  gridSize: 4, colors: 4, maxMoves: 8,  seed: 2003 },
+  { id: 9,  gridSize: 4, colors: 4, maxMoves: 7,  seed: 2004 },
+  { id: 10, gridSize: 4, colors: 4, maxMoves: 7,  seed: 2005 },
 
-  // ── TIER 3: Age 7+ ── 6x6 grid
-  { id: 11, gridSize: 6, colors: 4, maxMoves: 12, seed: 301 },
-  { id: 12, gridSize: 6, colors: 4, maxMoves: 11, seed: 302 },
-  { id: 13, gridSize: 6, colors: 5, maxMoves: 13, seed: 303 },
-  { id: 14, gridSize: 6, colors: 5, maxMoves: 12, seed: 304 },
-  { id: 15, gridSize: 6, colors: 5, maxMoves: 12, seed: 305 },
+  // ── TIER 3: Getting Warmer (5×5, 4 colors) ──
+  { id: 11, gridSize: 5, colors: 4, maxMoves: 10, seed: 3001 },
+  { id: 12, gridSize: 5, colors: 4, maxMoves: 10, seed: 3002 },
+  { id: 13, gridSize: 5, colors: 4, maxMoves: 9,  seed: 3003 },
+  { id: 14, gridSize: 5, colors: 4, maxMoves: 9,  seed: 3004 },
+  { id: 15, gridSize: 5, colors: 4, maxMoves: 8,  seed: 3005 },
 
-  // ── TIER 4: Age 8+ ── 7x7
-  { id: 16, gridSize: 7, colors: 5, maxMoves: 15, seed: 401 },
-  { id: 17, gridSize: 7, colors: 5, maxMoves: 14, seed: 402 },
-  { id: 18, gridSize: 7, colors: 5, maxMoves: 14, seed: 403 },
-  { id: 19, gridSize: 7, colors: 6, maxMoves: 16, seed: 404 },
-  { id: 20, gridSize: 7, colors: 6, maxMoves: 15, seed: 405 },
+  // ── TIER 4: Heating Up (5×5, 5 colors) ──
+  { id: 16, gridSize: 5, colors: 5, maxMoves: 12, seed: 4001 },
+  { id: 17, gridSize: 5, colors: 5, maxMoves: 11, seed: 4002 },
+  { id: 18, gridSize: 5, colors: 5, maxMoves: 11, seed: 4003 },
+  { id: 19, gridSize: 5, colors: 5, maxMoves: 10, seed: 4004 },
+  { id: 20, gridSize: 5, colors: 5, maxMoves: 10, seed: 4005 },
 
-  // ── TIER 5: Age 9+ ── 8x8
-  { id: 21, gridSize: 8, colors: 5, maxMoves: 18, seed: 501 },
-  { id: 22, gridSize: 8, colors: 5, maxMoves: 17, seed: 502 },
-  { id: 23, gridSize: 8, colors: 6, maxMoves: 19, seed: 503 },
-  { id: 24, gridSize: 8, colors: 6, maxMoves: 18, seed: 504 },
-  { id: 25, gridSize: 8, colors: 6, maxMoves: 18, seed: 505 },
+  // ── TIER 5: Challenge (6×6, 5 colors) ──
+  { id: 21, gridSize: 6, colors: 5, maxMoves: 14, seed: 5001 },
+  { id: 22, gridSize: 6, colors: 5, maxMoves: 13, seed: 5002 },
+  { id: 23, gridSize: 6, colors: 5, maxMoves: 13, seed: 5003 },
+  { id: 24, gridSize: 6, colors: 5, maxMoves: 12, seed: 5004 },
+  { id: 25, gridSize: 6, colors: 5, maxMoves: 12, seed: 5005 },
 
-  // ── TIER 6: Age 10+ ── 9x9
-  { id: 26, gridSize: 9, colors: 5, maxMoves: 20, seed: 601 },
-  { id: 27, gridSize: 9, colors: 6, maxMoves: 22, seed: 602 },
-  { id: 28, gridSize: 9, colors: 6, maxMoves: 21, seed: 603 },
-  { id: 29, gridSize: 9, colors: 6, maxMoves: 21, seed: 604 },
-  { id: 30, gridSize: 9, colors: 6, maxMoves: 20, seed: 605 },
+  // ── TIER 6: Tricky (6×6, 6 colors) ──
+  { id: 26, gridSize: 6, colors: 6, maxMoves: 16, seed: 6001 },
+  { id: 27, gridSize: 6, colors: 6, maxMoves: 15, seed: 6002 },
+  { id: 28, gridSize: 6, colors: 6, maxMoves: 15, seed: 6003 },
+  { id: 29, gridSize: 6, colors: 6, maxMoves: 14, seed: 6004 },
+  { id: 30, gridSize: 6, colors: 6, maxMoves: 14, seed: 6005 },
+
+  // ── TIER 7: Expert (7×7, 5 colors) ──
+  { id: 31, gridSize: 7, colors: 5, maxMoves: 17, seed: 7001 },
+  { id: 32, gridSize: 7, colors: 5, maxMoves: 16, seed: 7002 },
+  { id: 33, gridSize: 7, colors: 5, maxMoves: 16, seed: 7003 },
+  { id: 34, gridSize: 7, colors: 5, maxMoves: 15, seed: 7004 },
+  { id: 35, gridSize: 7, colors: 5, maxMoves: 15, seed: 7005 },
+
+  // ── TIER 8: Master (7×7, 6 colors) ──
+  { id: 36, gridSize: 7, colors: 6, maxMoves: 19, seed: 8001 },
+  { id: 37, gridSize: 7, colors: 6, maxMoves: 18, seed: 8002 },
+  { id: 38, gridSize: 7, colors: 6, maxMoves: 18, seed: 8003 },
+  { id: 39, gridSize: 7, colors: 6, maxMoves: 17, seed: 8004 },
+  { id: 40, gridSize: 7, colors: 6, maxMoves: 17, seed: 8005 },
+
+  // ── TIER 9: Grandmaster (8×8, 6 colors) ──
+  { id: 41, gridSize: 8, colors: 6, maxMoves: 21, seed: 9001 },
+  { id: 42, gridSize: 8, colors: 6, maxMoves: 20, seed: 9002 },
+  { id: 43, gridSize: 8, colors: 6, maxMoves: 20, seed: 9003 },
+  { id: 44, gridSize: 8, colors: 6, maxMoves: 19, seed: 9004 },
+  { id: 45, gridSize: 8, colors: 6, maxMoves: 19, seed: 9005 },
+
+  // ── TIER 10: Legend (9×9, 6 colors, tight moves) ──
+  { id: 46, gridSize: 9, colors: 6, maxMoves: 22, seed: 10001 },
+  { id: 47, gridSize: 9, colors: 6, maxMoves: 21, seed: 10002 },
+  { id: 48, gridSize: 9, colors: 6, maxMoves: 21, seed: 10003 },
+  { id: 49, gridSize: 9, colors: 6, maxMoves: 20, seed: 10004 },
+  { id: 50, gridSize: 9, colors: 6, maxMoves: 20, seed: 10005 },
 ];
 
 // Seeded pseudo-random number generator (Mulberry32)

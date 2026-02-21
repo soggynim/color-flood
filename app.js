@@ -108,7 +108,7 @@
 
   // ── LEVEL SELECT ──
   // Tier boundaries (level IDs 1-5, 6-10, 11-15, 16-20, 21-25, 26-30)
-  const TIERS = [[1,5],[6,10],[11,15],[16,20],[21,25],[26,30]];
+  const TIERS = [[1,5],[6,10],[11,15],[16,20],[21,25],[26,30],[31,35],[36,40],[41,45],[46,50]];
 
   function renderLevelSelect() {
     const profile = ProfileManager.getActive();
@@ -184,13 +184,14 @@
     const levelDef = getLevel(levelId);
     if (!levelDef) return;
 
-    Game.loadLevel(levelDef);
     document.getElementById('level-label').textContent = `Level ${levelId}`;
-    updateMovesUI(0, levelDef.maxMoves);
-    buildColorButtons(levelDef.colors);
     hideOverlays();
     showScreen('screen-game');
-    requestAnimationFrame(() => { Game.resize(); Game.render(); });
+    buildColorButtons(levelDef.colors);
+    updateMovesUI(0, levelDef.maxMoves);
+    requestAnimationFrame(() => {
+      Game.loadLevel(levelDef);
+    });
   }
 
   function updateMovesUI(used, max) {
