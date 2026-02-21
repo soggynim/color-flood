@@ -495,6 +495,7 @@ html, body {
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
+.confirm-bar { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
 .win-bar  { background: linear-gradient(90deg, var(--green), var(--blue)); }
 .fail-bar { background: linear-gradient(90deg, var(--pink), var(--orange)); }
 

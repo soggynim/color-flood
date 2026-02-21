@@ -129,7 +129,7 @@
         const btn = document.createElement('button');
         btn.className = 'level-btn' + (isDone ? ' completed' : '') + (isLocked ? ' locked' : '') + (isCurrent ? ' current' : '');
         btn.innerHTML = `<span class="lnum">${id}</span><span class="lbadge">${isDone ? '⭐' : isLocked ? '🔒' : isCurrent ? '▶' : ''}</span>`;
-        if (!isLocked) btn.addEventListener('click', () => startLevel(id));
+        if (!isLocked) btn.addEventListener('click', () => showLevelConfirm(id));
         grid.appendChild(btn);
       }
     });
@@ -145,6 +145,34 @@
   document.getElementById('btn-back-to-splash').addEventListener('click', () => {
     showScreen('screen-splash');
     renderProfileList();
+  });
+
+  // ── LEVEL CONFIRM POPUP ──
+  let pendingLevelId = null;
+
+  function showLevelConfirm(levelId) {
+    pendingLevelId = levelId;
+    const lvl = LEVELS.find(l => l.id === levelId);
+    if (!lvl) return;
+    document.getElementById('confirm-level-title').textContent = `Start Level ${levelId}?`;
+    document.getElementById('confirm-level-detail').textContent =
+      `${lvl.gridSize}×${lvl.gridSize} grid · ${lvl.colors} colors · ${lvl.maxMoves} moves`;
+    document.getElementById('overlay-level-confirm').classList.remove('hidden');
+  }
+
+  function hideLevelConfirm() {
+    document.getElementById('overlay-level-confirm').classList.add('hidden');
+    pendingLevelId = null;
+  }
+
+  document.getElementById('btn-confirm-yes').addEventListener('click', () => {
+    const levelId = pendingLevelId;
+    hideLevelConfirm();
+    if (levelId) startLevel(levelId);
+  });
+
+  document.getElementById('btn-confirm-no').addEventListener('click', () => {
+    hideLevelConfirm();
   });
 
   // ── GAME ──
