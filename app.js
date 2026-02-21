@@ -40,11 +40,12 @@
       card.className = 'profile-card';
       card.style.animationDelay = `${i * 0.07}s`;
       card.innerHTML = `
-        <span class="profile-avatar">${p.avatar}</span>
+        <div class="profile-avatar">${p.avatar}</div>
         <div class="profile-info">
           <div class="pname">${escHtml(p.name)}</div>
-          <div class="plevel">${completed} level${completed !== 1 ? 's' : ''} completed ⭐</div>
+          <div class="plevel">${completed} level${completed !== 1 ? 's' : ''} completed</div>
         </div>
+        <span class="profile-chevron">›</span>
         <button class="profile-delete" data-id="${p.id}" title="Delete">✕</button>
       `;
       card.addEventListener('click', async (e) => {
@@ -138,7 +139,7 @@
     const p = ProfileManager.getActive();
     if (!p) return;
     document.getElementById('active-profile-display').innerHTML =
-      `<span>${p.avatar}</span> <span>${escHtml(p.name)}</span>`;
+      `<div class="bavatar">${p.avatar}</div><span>${escHtml(p.name)}</span>`;
   }
 
   document.getElementById('btn-back-to-splash').addEventListener('click', () => {
