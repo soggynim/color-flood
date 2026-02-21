@@ -1,39 +1,41 @@
-// service-worker.js
-const CACHE_VERSION = 'flood-v1';
+// service-worker.js — bump CACHE_VERSION to force refresh on all clients
+const CACHE_VERSION = 'flood-v3';
+
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/levels.js',
-  '/js/supabase-client.js',
-  '/js/profiles.js',
-  '/js/game.js',
-  '/js/app.js',
-  '/manifest.json',
+  './',
+  './index.html',
+  './css/style.css',
+  './js/levels.js',
+  './js/supabase-client.js',
+  './js/profiles.js',
+  './js/game.js',
+  './js/app.js',
+  './manifest.json',
 ];
 
 self.addEventListener('install', event => {
+  // Force this SW to become active immediately, don't wait
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_VERSION).then(cache => cache.addAll(STATIC_ASSETS))
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
+  // Delete ALL old caches immediately
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k)))
-    )
+    ).then(() => self.clients.claim()) // Take control of all open tabs
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
-  // Network first for Supabase, cache first for static
-  if (event.request.url.includes('supabase')) {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
+  // Skip Supabase and external requests — always go to network
+  if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
+  // Cache-first for our own assets
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request))
   );
