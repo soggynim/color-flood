@@ -1,15 +1,15 @@
 // service-worker.js — bump CACHE_VERSION to force refresh on all clients
-const CACHE_VERSION = 'flood-v3';
+const CACHE_VERSION = 'flood-v4';
 
 const STATIC_ASSETS = [
   './',
   './index.html',
-  './css/style.css',
-  './js/levels.js',
-  './js/supabase-client.js',
-  './js/profiles.js',
-  './js/game.js',
-  './js/app.js',
+  './style.css',
+  './levels.js',
+  './supabase-client.js',
+  './profiles.js',
+  './game.js',
+  './app.js',
   './manifest.json',
 ];
 
