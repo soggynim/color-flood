@@ -15,7 +15,12 @@
 </head>
 <body>
 
-  <!-- SPLASH -->
+  <!-- Background always visible underneath screens -->
+  <div class="starfield"></div>
+
+  <!-- ══════════════════════════════
+       SCREEN 1: Splash / Profile Select
+  ══════════════════════════════ -->
   <div id="screen-splash" class="screen active">
     <div class="bubbles">
       <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -35,7 +40,9 @@
     </div>
   </div>
 
-  <!-- NEW PROFILE -->
+  <!-- ══════════════════════════════
+       SCREEN 2: New Profile
+  ══════════════════════════════ -->
   <div id="screen-new-profile" class="screen">
     <div class="bubbles">
       <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -43,7 +50,8 @@
     <div class="screen-center">
       <div class="profile-form-card">
         <h2>👋 What's your name?</h2>
-        <input id="profile-name-input" type="text" maxlength="16" placeholder="Type your name..." class="name-input" autocomplete="off" />
+        <input id="profile-name-input" type="text" maxlength="16"
+               placeholder="Type your name..." class="name-input" autocomplete="off" />
         <div class="avatar-picker" id="avatar-picker">
           <span class="avatar-opt" data-avatar="🦁">🦁</span>
           <span class="avatar-opt" data-avatar="🐯">🐯</span>
@@ -62,7 +70,9 @@
     </div>
   </div>
 
-  <!-- LEVEL SELECT -->
+  <!-- ══════════════════════════════
+       SCREEN 3: Level Select
+  ══════════════════════════════ -->
   <div id="screen-levels" class="screen">
     <div class="bubbles">
       <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -90,7 +100,9 @@
     </div>
   </div>
 
-  <!-- GAME -->
+  <!-- ══════════════════════════════
+       SCREEN 4: Game
+  ══════════════════════════════ -->
   <div id="screen-game" class="screen">
     <header class="game-header">
       <button id="btn-back-to-levels" class="btn-icon">←</button>
@@ -109,21 +121,25 @@
     <div id="color-buttons" class="color-buttons"></div>
   </div>
 
-  <!-- WIN OVERLAY -->
+  <!-- ══════════════════════════════
+       OVERLAY: Win (hidden by default)
+  ══════════════════════════════ -->
   <div id="overlay-win" class="overlay hidden">
     <div class="overlay-card win-card">
       <div class="stars-burst">⭐✨⭐</div>
       <div class="overlay-emoji">🎉</div>
       <h2>You did it!</h2>
-      <p id="win-detail">10 moves used</p>
+      <p id="win-detail">Great job!</p>
       <div class="btn-row">
         <button id="btn-next-level" class="btn btn-primary">Next Level →</button>
       </div>
-      <button id="btn-win-levels" class="btn btn-ghost" style="width:100%;margin-top:4px">All Levels</button>
+      <button id="btn-win-levels" class="btn-ghost-dark" style="width:100%;margin-top:4px">All Levels</button>
     </div>
   </div>
 
-  <!-- FAIL OVERLAY -->
+  <!-- ══════════════════════════════
+       OVERLAY: Fail (hidden by default)
+  ══════════════════════════════ -->
   <div id="overlay-fail" class="overlay hidden">
     <div class="overlay-card fail-card">
       <div class="overlay-emoji">😅</div>
@@ -131,7 +147,7 @@
       <p>Keep trying — you've got this!</p>
       <div class="btn-row">
         <button id="btn-retry" class="btn btn-primary">Try Again!</button>
-        <button id="btn-fail-levels" class="btn btn-ghost">Levels</button>
+        <button id="btn-fail-levels" class="btn-ghost-dark">Levels</button>
       </div>
     </div>
   </div>
